@@ -17,7 +17,7 @@ If you want to see the English version, open the file `README_us.md`.This is the
 
 [1/3] - прогресс по частям задачи
 
-[❓]
+[❓] - ?
 ---
 
 # История изменений проекта MiniCodeLab
