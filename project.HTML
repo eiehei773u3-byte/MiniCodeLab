@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
+<<head>
   <meta charset="UTF-8">
   <title>Проект</title>
   <link rel="stylesheet" href="project.css">
-  <!-- Подключаем init.js-->
+
+  <!-- init.js должен быть подключен первым -->
+  <script src="init.js" defer></script>
+
+  <!-- основной скрипт проекта -->
+  <script src="project.js" defer></script>
 </head>
 <body>
 
@@ -46,9 +51,6 @@
     <button id="deleteBtn">🗑 Удалить</button>
 </div>
 
-<!--проверка скриптои и т.д-->
-<script src="init.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="project.js"></script>
+
 </body>
 </html>

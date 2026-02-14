@@ -1,13 +1,62 @@
 // ================== init.js ==================
-// Безопасная инициализация проекта с повторными попытками
-let MAX_ATTEMPTS = 10;
+let MAX_ATTEMPTS = 20;
 let attempt = 0;
+
+function showErrorModal() {
+    // Проверяем, есть ли уже модал
+    if (document.getElementById("initErrorModal")) return;
+
+    const modal = document.createElement("div");
+    modal.id = "initErrorModal";
+    modal.style.position = "fixed";
+    modal.style.top = "0";
+    modal.style.left = "0";
+    modal.style.width = "100%";
+    modal.style.height = "100%";
+    modal.style.background = "rgba(0,0,0,0.6)";
+    modal.style.display = "flex";
+    modal.style.alignItems = "center";
+    modal.style.justifyContent = "center";
+    modal.style.zIndex = "9999";
+
+    const box = document.createElement("div");
+    box.style.background = "#1e1e1e";
+    box.style.color = "white";
+    box.style.padding = "20px";
+    box.style.borderRadius = "10px";
+    box.style.textAlign = "center";
+    box.style.width = "300px";
+    box.innerHTML = `
+        <h2>Ошибка инициализации</h2>
+        <p>❌ Не удалось найти основные элементы DOM.</p>
+    `;
+
+    const retryBtn = document.createElement("button");
+    retryBtn.textContent = "Повторить";
+    retryBtn.style.margin = "10px";
+    retryBtn.onclick = () => {
+        modal.remove();
+        attempt = 0; // обнуляем счётчик
+        safeInit();
+    };
+
+    const homeBtn = document.createElement("button");
+    homeBtn.textContent = "Главная";
+    homeBtn.style.margin = "10px";
+    homeBtn.onclick = () => {
+        window.location.href = "index.html";
+    };
+
+    box.appendChild(retryBtn);
+    box.appendChild(homeBtn);
+    modal.appendChild(box);
+    document.body.appendChild(modal);
+}
 
 function safeInit() {
     attempt++;
-    console.log(`\n[Init] Попытка ${attempt} запуска безопасной инициализации...`);
+    console.log(`[Init] Попытка ${attempt}`);
 
-    // Проверяем основные элементы DOM
     const fileTree = document.getElementById("fileTree");
     const editor = document.getElementById("editor");
     const fileName = document.getElementById("fileName");
@@ -25,22 +74,14 @@ function safeInit() {
     const historyWindow = document.getElementById("historyWindow");
     const closeHistoryBtn = document.getElementById("closeHistoryBtn");
 
-    // Лог текущего состояния DOM элементов
-    console.log("[Init] Проверка DOM элементов:");
-    console.log("fileTree:", !!fileTree, "editor:", !!editor, "fileName:", !!fileName);
-    console.log("addFileBtn:", !!addFileBtn, "addFolderBtn:", !!addFolderBtn);
-    console.log("downloadFileBtn:", !!downloadFileBtn, "downloadProjectBtn:", !!downloadProjectBtn, "backBtn:", !!backBtn);
-    console.log("contextMenu:", !!contextMenu, "renameBtn:", !!renameBtn, "deleteBtn:", !!deleteBtn);
-
     if (
         fileTree && editor && fileName &&
         addFileBtn && addFolderBtn &&
         downloadFileBtn && downloadProjectBtn && backBtn &&
         contextMenu && renameBtn && deleteBtn
     ) {
-        console.log("✅ Все необходимые DOM элементы найдены.");
-
-        // Сохраняем глобально, чтобы основной project.js мог работать
+        console.log("[Init] ✅ DOM найден, запускаем проект");
+        
         window.fileTree = fileTree;
         window.editor = editor;
         window.fileName = fileName;
@@ -55,31 +96,19 @@ function safeInit() {
         window.historyWindow = historyWindow;
         window.closeHistoryBtn = closeHistoryBtn;
 
-        console.log("[Init] Глобальные переменные назначены.");
-
-        // Вызов основного скрипта, если он определён
         if (typeof window.startProject === "function") {
-            console.log("[Init] Вызываем функцию startProject()...");
             window.startProject();
-        } else {
-            console.log("[Init] Функция startProject() пока не определена. Проект нужно запустить позже.");
         }
-
         return;
     }
 
-    // Если DOM ещё не готов
     if (attempt < MAX_ATTEMPTS) {
-        console.log(`⚠ DOM ещё не готов, пробуем снова через 200мс`);
+        console.log("[Init] ⚠ DOM ещё не готов, повторная проверка через 200мс");
         setTimeout(safeInit, 200);
     } else {
-        alert("❌ Не удалось найти основные элементы DOM! Проект не может быть запущен.");
-        console.error("[Init] Превышено максимальное число попыток. Инициализация не удалась.");
+        console.error("[Init] ❌ Превышено max число попыток");
+        showErrorModal(); // выводим красивое модальное окно
     }
 }
 
-// Запуск после полной загрузки DOM
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("[Init] DOMContentLoaded сработал. Старт безопасной инициализации...");
-    safeInit();
-});
+document.addEventListener("DOMContentLoaded", safeInit);

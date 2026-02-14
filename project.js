@@ -290,3 +290,9 @@ backBtn.onclick = () => {
 
 // ====== СТАРТ ======
 renderTree();
+
+// project.js
+window.startProject = function() {
+    console.log("[project.js] Проект успешно запущен");
+    // ваш старый код запуска, рендер и привязки кнопок
+};
