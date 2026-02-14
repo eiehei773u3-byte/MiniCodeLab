@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title id="pageTitle">Проект</title>
+<link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<header>
+    <h1 id="projectTitle">Мой проект</h1>
+    <div>
+        <button id="downloadProjectBtn">Скачать проект</button>
+        <button id="backBtn">Назад</button>
+    </div>
+</header>
+
+<!-- Breadcrumb / путь -->
+<div id="breadcrumb" class="breadcrumb"></div>
+
+<!-- Контейнер проекта -->
+<div class="container">
+    <!-- Панель дерева файлов -->
+    <div class="sidebar">
+        <div class="controls">
+            <button id="addFileBtn">Создать файл</button>
+            <button id="addFolderBtn">Создать папку</button>
+        </div>
+        <div id="fileTree"></div>
+    </div>
+
+    <!-- Редактор -->
+    <div class="editor-container">
+        <div class="editor-header">
+            <span id="fileName">Выберите файл</span>
+            <button id="downloadFileBtn">Скачать файл</button>
+        </div>
+        <textarea class="editor" id="editor" placeholder="[Редактор кода]" spellcheck="false"></textarea>
+    </div>
+</div>
+
+
+<div id="contextMenu" class="context-menu">
+    <button id="renameBtn">✏ Переименовать</button>
+    <button id="deleteBtn">🗑 Удалить</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="project.js"></script>
+</body>
+</html>
