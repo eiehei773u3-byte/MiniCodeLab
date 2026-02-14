@@ -29,7 +29,7 @@ This is the Russian version of the project.
 - Project until in *beta**.
 - All changes are recorded in log and file history.
 
-## [beta] 2026-02-1 
+## [beta] 2026-02-14
 **attempt to add verification and logging**
 - adding log
 - verification (incivilization)
