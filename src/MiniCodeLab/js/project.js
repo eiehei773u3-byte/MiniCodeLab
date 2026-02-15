@@ -86,7 +86,9 @@ function getFileIcon(fileName) {
         py: "🐍",
         java: "☕",
         cpp: "⚙️",
-        c: "⚙️"
+        c: "⚙️",
+        apk: "📱",
+        zip: "**zip**"
     };
 
     return icons[ext] || "📄";
