@@ -112,3 +112,9 @@ function safeInit() {
 }
 
 document.addEventListener("DOMContentLoaded", safeInit);
+
+window.onload = function () {
+    if (typeof startProject === "function") {
+        startProject();
+    }
+};

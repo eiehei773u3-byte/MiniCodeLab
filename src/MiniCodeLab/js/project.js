@@ -1,3 +1,14 @@
+// === DEBUG CHECK ===
+const isDebugMode = sessionStorage.getItem("debugMode") === "true";
+
+// список расширений
+const supportedExtensions = [
+    "html", "css", "js", "json", "md",
+    "png", "jpg", "jpeg", "svg",
+    "py", "java", "cpp", "c",
+    "apk", "zip"
+];
+
 function startProject() {
     // ====== Основные переменные ======
     let project = [];
@@ -290,11 +301,31 @@ backBtn.onclick = () => {
     window.history.back();
 };
 
-// ====== СТАРТ ======
-renderTree();
 
 // project.js
 window.startProject = function() {
-    console.log("[project.js] Проект успешно запущен");
-    // ваш старый код запуска, рендер и привязки кнопок
+
+    if (isDebugMode) {
+
+        console.log("🧪 DEBUG MODE: создан тестовый проект");
+
+        project = [{
+            type: "folder",
+            name: "ExtensionTest",
+            open: true,
+            children: supportedExtensions.map(ext => ({
+                type: "file",
+                name: "test." + ext,
+                content: "// debug file"
+            }))
+        }];
+
+        selectedItem = null;
+        selectedParent = null;
+
+        sessionStorage.removeItem("debugMode");
+    }
+
+    renderTree();
 };
+    // ваш старый код запуска, рендер и привязки кнопок

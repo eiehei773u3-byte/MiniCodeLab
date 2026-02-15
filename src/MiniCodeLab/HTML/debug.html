@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>MiniCodeLab Debug</title>
+</head>
+<body>
+
+<h2>MiniCodeLab — Debug режим</h2>
+
+<button id="openTestProject">🧪 Открыть тестовый проект</button>
+<button onclick="window.location.href='index.html'">
+🏠 На главную
+</button>
+
+<script>
+document.getElementById("openTestProject").onclick = () => {
+
+    sessionStorage.setItem("debugMode", "true");
+
+    window.location.href = "project.html";
+};
+</script>
+
+</body>
+</html>
